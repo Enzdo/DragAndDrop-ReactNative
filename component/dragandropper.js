@@ -1,11 +1,9 @@
-// App.js
+// dragandropper.js
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import DragAndDrop from "volkeno-react-native-drag-drop";
 
-
-
-export default function App() {
+const DragAndDropper = () => {
   const [items, setItems] = React.useState([
     { id: 1, text: "Test item 1" },
     { id: 2, text: "Test item 2" },
@@ -24,47 +22,44 @@ export default function App() {
     },
   ]);
 
-  return ( 
-    <View className="flex-1 items-center justify-center bg-white">
-      <DragAndDrop
-        
-        contentContainerStyle={styles.contentContainerStyle}
-        itemKeyExtractor={(item) => item.id}
-        zoneKeyExtractor={(zone) => zone.id}
-        zones={zones}
-        items={items}
-        itemsContainerStyle={styles.itemsContainerStyle}
-        zonesContainerStyle={styles.zonesContainerStyle}
-        onMaj={(zones, items) => {
-          setItems(items);
-          setZones(zones);
-        }}
-        itemsInZoneStyle={styles.itemsInZoneStyle}
-        renderItem={(item) => {
-          return (
-            <View className="text-black ">
-              <Text className="text-black ">{item.text}</Text>
-            </View>
-          );
-        }}
-        renderZone={(zone, children, hover) => {
-          return (
-            <View
-              style={{
-                ...styles.dragZoneStyle,
-                backgroundColor: hover ? "#E2E2E2" : "#FFF",
-              }}
-            >
-              <Text style={styles.dragZoneTextStyle}>{zone.text}</Text>
-              {children}
-            </View>
-          );
-        }}
-      />
-    </View>
+  return (
+    <DragAndDrop
+      style={styles.container}
+      contentContainerStyle={styles.contentContainerStyle}
+      itemKeyExtractor={(item) => item.id}
+      zoneKeyExtractor={(zone) => zone.id}
+      zones={zones}
+      items={items}
+      itemsContainerStyle={styles.itemsContainerStyle}
+      zonesContainerStyle={styles.zonesContainerStyle}
+      onMaj={(zones, items) => {
+        setItems(items);
+        setZones(zones);
+      }}
+      itemsInZoneStyle={styles.itemsInZoneStyle}
+      renderItem={(item) => {
+        return (
+          <View style={styles.dragItemStyle}>
+            <Text style={styles.dragItemTextStyle}>{item.text}</Text>
+          </View>
+        );
+      }}
+      renderZone={(zone, children, hover) => {
+        return (
+          <View
+            style={{
+              ...styles.dragZoneStyle,
+              backgroundColor: hover ? "#E2E2E2" : "#FFF",
+            }}
+          >
+            <Text style={styles.dragZoneTextStyle}>{zone.text}</Text>
+            {children}
+          </View>
+        );
+      }}
+    />
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -119,3 +114,5 @@ const styles = StyleSheet.create({
     top: "50%",
   },
 });
+
+export default DragAndDropper;
